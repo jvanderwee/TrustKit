@@ -297,11 +297,12 @@ static const NSString *kTSKKeychainPublicKeyTag = @"TSKKeychainPublicKeyTag"; //
 {
     // Create an X509 trust using the using the certificate
     SecTrustRef trust;
+    SecTrustResultType trustResultType;
     SecPolicyRef policy = SecPolicyCreateBasicX509();
     SecTrustCreateWithCertificates(certificate, policy, &trust);
     
     // Get a public key reference for the certificate from the trust
-    SecTrustEvaluate(trust, NULL);
+    SecTrustEvaluate(trust, &trustResultType);
     SecKeyRef publicKey = SecTrustCopyPublicKey(trust);
     CFRelease(policy);
     CFRelease(trust);
@@ -327,11 +328,12 @@ static const NSString *kTSKKeychainPublicKeyTag = @"TSKKeychainPublicKeyTag"; //
     __block OSStatus resultAdd, __block resultDel = noErr;
     SecKeyRef publicKey;
     SecTrustRef tempTrust;
+    SecTrustResultType tempTrustResultType;
     SecPolicyRef policy = SecPolicyCreateBasicX509();
     
     // Get a public key reference from the certificate
     SecTrustCreateWithCertificates(certificate, policy, &tempTrust);
-    SecTrustEvaluate(tempTrust, NULL);
+    SecTrustEvaluate(tempTrust, &tempTrustResultType);
     publicKey = SecTrustCopyPublicKey(tempTrust);
     CFRelease(policy);
     CFRelease(tempTrust);
