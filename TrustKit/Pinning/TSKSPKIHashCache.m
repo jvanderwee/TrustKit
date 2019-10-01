@@ -157,7 +157,7 @@ static const NSString *kTSKKeychainPublicKeyTag = @"TSKKeychainPublicKeyTag"; //
 - (NSData *)hashSubjectPublicKeyInfoFromCertificate:(SecCertificateRef)certificate publicKeyAlgorithm:(TSKPublicKeyAlgorithm)publicKeyAlgorithm
 {
     __block NSData *cachedSubjectPublicKeyInfo;
-    NSNumber *algorithmKey = [NSNumber numberWithInt:publicKeyAlgorithm];
+    NSNumber *algorithmKey = [NSNumber numberWithInt:(int)publicKeyAlgorithm];
     
     // Have we seen this certificate before? Look for the SPKI in the cache
     NSData *certificateData = (__bridge_transfer NSData *)(SecCertificateCopyData(certificate));
